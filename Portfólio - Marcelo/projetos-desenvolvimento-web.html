@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desenvolvimento Web — Projetos | Marcelo H. Almeida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0A;
+    --ink-soft:#0F0F12;
+    --paper:#FFFFFF;
+    --violet:#7C3AED;
+    --violet-light:#A855F7;
+    --zinc-900:#18181B;
+    --zinc-800:#232326;
+    --zinc-500:#71717A;
+    --zinc-200:#E4E4E7;
+    --font-display:'Playfair Display', Georgia, serif;
+    --font-body:'Montserrat', -apple-system, sans-serif;
+    --ease:cubic-bezier(.16,.84,.44,1);
+    --nav-h:76px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+  body{
+    background:var(--ink); color:var(--paper); font-family:var(--font-body);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  ::selection{background:var(--violet); color:#fff;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--violet-light); outline-offset:3px; border-radius:2px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:900; height:var(--nav-h);
+    display:flex; align-items:center; background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .5s var(--ease), border-color .5s var(--ease);
+  }
+  header.nav.scrolled{
+    background:rgba(10,10,10,.72); backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner{ width:100%; display:flex; align-items:center; justify-content:space-between; }
+  .back-link{
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+    color:var(--zinc-200); transition:color .3s var(--ease), gap .3s var(--ease);
+  }
+  .back-link:hover{ color:#fff; gap:14px; }
+  .back-link svg{ transition:transform .3s var(--ease); }
+  .back-link:hover svg{ transform:translateX(-3px); }
+  .nav-brand{ font-family:var(--font-display); font-size:17px; font-weight:600; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); filter:blur(4px);
+    transition:opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);}
+  .reveal.in-view{ opacity:1; transform:translateY(0); filter:blur(0);}
+  .reveal-d1.in-view{transition-delay:.1s;}
+  .reveal-d2.in-view{transition-delay:.2s;}
+
+  /* ---------- INTRO ---------- */
+  .intro{ padding:calc(var(--nav-h) + 100px) 0 90px; }
+  .eyebrow{
+    font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--violet-light);
+    font-weight:600; margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:''; width:28px; height:1px; background:var(--violet-light); }
+  h1.page-title{
+    font-family:var(--font-display); font-weight:700; letter-spacing:-.01em;
+    font-size:clamp(2.6rem, 6vw, 4.6rem); line-height:1.04; max-width:760px;
+  }
+  .page-lede{
+    margin-top:26px; max-width:560px; color:var(--zinc-500); font-size:1.06rem; line-height:1.85;
+  }
+  .intro-meta{
+    margin-top:56px; display:flex; gap:56px; flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,.1); padding-top:28px;
+  }
+  .intro-meta div p:first-child{
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--zinc-500); margin-bottom:8px;
+  }
+  .intro-meta div p:last-child{ font-family:var(--font-display); font-size:1.2rem; font-weight:600; }
+
+  /* ---------- CASE STUDY ---------- */
+  .case{ padding:80px 0; border-top:1px solid rgba(255,255,255,.08); }
+  .case-grid{
+    display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:center;
+  }
+  .case:nth-child(even) .case-grid{ grid-template-columns:1.15fr .85fr; }
+  .case:nth-child(even) .case-copy{ order:2; }
+  .case:nth-child(even) .case-visual{ order:1; }
+
+  .case-kicker{
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--violet-light);
+    font-weight:600; margin-bottom:18px;
+  }
+  .case-copy h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(1.8rem, 3.2vw, 2.5rem);
+    letter-spacing:-.01em; margin-bottom:20px;
+  }
+  .case-copy p{ color:var(--zinc-500); font-size:1rem; line-height:1.85; max-width:440px; }
+  .case-tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+  .case-tags span{
+    padding:8px 16px; border-radius:100px; border:1px solid rgba(255,255,255,.14);
+    font-size:.78rem; font-weight:500; color:var(--zinc-200);
+  }
+  .case-link{
+    margin-top:30px; display:inline-flex; align-items:center; gap:10px;
+    font-size:.85rem; font-weight:600; padding:15px 28px; border-radius:100px;
+    border:1px solid rgba(255,255,255,.18); transition:all .4s var(--ease);
+  }
+  .case-link:hover{ border-color:#fff; background:#fff; color:var(--ink); transform:translateY(-3px); }
+  .case-link svg{ transition:transform .35s var(--ease); }
+  .case-link:hover svg{ transform:translateX(4px); }
+
+  /* ---------- MOCKUP WINDOW ---------- */
+  .case-visual{ position:relative; }
+  .badge-demo{
+    position:absolute; top:18px; right:-10px; z-index:5;
+    background:var(--ink); border:1px solid rgba(255,255,255,.18);
+    color:var(--zinc-200); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    font-weight:600; padding:8px 14px; border-radius:100px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .badge-demo::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--violet-light); }
+
+  .browser{
+    border-radius:16px; overflow:hidden;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.75);
+    transition:transform .6s var(--ease);
+  }
+  .case-visual:hover .browser{ transform:translateY(-6px); }
+  .browser-bar{
+    background:#111113; padding:12px 16px; display:flex; align-items:center; gap:14px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .browser-dots{ display:flex; gap:6px; }
+  .browser-dots span{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.14); }
+  .browser-url{
+    flex:1; background:rgba(255,255,255,.05); border-radius:6px; padding:6px 12px;
+    font-size:11px; color:var(--zinc-500); display:flex; align-items:center; gap:6px;
+  }
+  .browser-visual{
+    display:block; width:100%; background:#0e0f12;
+  }
+  .browser-image{
+    display:block; width:100%; height:clamp(220px, 30vw, 390px);
+    object-fit:cover; object-position:center;
+    background:#111113;
+  }
+
+  /* clinic mock theme */
+  .mock-clinic{ background:linear-gradient(165deg,#1c1815,#0d0b09); padding:26px 28px 34px; }
+  .mock-clinic .m-nav{ display:flex; justify-content:space-between; align-items:center; margin-bottom:34px; }
+  .mock-clinic .m-logo{ font-family:var(--font-display); font-style:italic; font-size:.85rem; color:#e9ddce; }
+  .mock-clinic .m-links{ display:flex; gap:18px; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:#9c8f7d; }
+  .mock-clinic h3{
+    font-family:var(--font-display); font-style:italic; font-weight:500; color:#f3ece2;
+    font-size:clamp(1.5rem,3vw,2.1rem); line-height:1.18; max-width:70%;
+  }
+  .mock-clinic .m-sub{ margin-top:14px; max-width:60%; font-size:.72rem; color:#a99d8b; line-height:1.7; }
+  .mock-clinic .m-cta{ display:flex; gap:10px; margin-top:24px; }
+  .mock-clinic .m-cta span{ font-size:.62rem; letter-spacing:.05em; padding:9px 16px; border-radius:100px; }
+  .mock-clinic .m-cta .primary{ background:#8a7a5c; color:#100e0b; font-weight:600; }
+  .mock-clinic .m-cta .ghost{ border:1px solid rgba(233,221,206,.35); color:#e9ddce; }
+  .mock-clinic .m-photo{
+    margin-top:30px; height:90px; border-radius:10px;
+    background:linear-gradient(135deg,#c9a86a33,#00000000), repeating-linear-gradient(120deg, rgba(255,255,255,.03) 0 2px, transparent 2px 14px);
+    border:1px solid rgba(255,255,255,.06);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mock-clinic .m-photo svg{ opacity:.5; }
+
+  /* solaris mock theme */
+  .mock-solaris{ background:linear-gradient(165deg,#0e1526,#080b14); padding:26px 28px 34px; }
+  .mock-solaris .m-nav{ display:flex; justify-content:space-between; align-items:center; margin-bottom:34px; }
+  .mock-solaris .m-logo{ font-family:var(--font-display); font-weight:700; font-size:.85rem; color:#f4b942; }
+  .mock-solaris .m-links{ display:flex; gap:16px; font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; color:#7c8aa8; }
+  .mock-solaris .m-body{ display:flex; gap:24px; align-items:center; }
+  .mock-solaris h3{
+    font-family:var(--font-display); font-weight:700; color:#f2f5fb;
+    font-size:clamp(1.35rem,2.6vw,1.9rem); line-height:1.2;
+  }
+  .mock-solaris h3 em{ font-style:italic; color:#f4b942; }
+  .mock-solaris .m-sub{ margin-top:12px; font-size:.7rem; color:#8b97b3; line-height:1.7; max-width:230px; }
+  .mock-solaris .m-cta{ display:flex; gap:10px; margin-top:22px; }
+  .mock-solaris .m-cta span{ font-size:.6rem; letter-spacing:.05em; padding:9px 16px; border-radius:8px; }
+  .mock-solaris .m-cta .primary{ background:#f4b942; color:#0e1526; font-weight:700; }
+  .mock-solaris .m-cta .ghost{ border:1px solid rgba(244,185,66,.3); color:#e7ecf5; }
+  .mock-solaris .m-visual{
+    flex:0 0 120px; height:120px; border-radius:12px;
+    background:radial-gradient(circle at 30% 30%, rgba(244,185,66,.18), transparent 60%), rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- PROCESS / FEATURES ---------- */
+  .process{ padding:140px 0 100px; }
+  .process-head{ max-width:640px; }
+  .process-head h2{
+    font-family:var(--font-display); font-weight:700; letter-spacing:-.01em;
+    font-size:clamp(1.9rem,3.4vw,2.7rem); line-height:1.14;
+  }
+  .process-head p{ margin-top:20px; color:var(--zinc-500); font-size:1.02rem; line-height:1.85; }
+
+  .process-grid{ margin-top:64px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.08); border-radius:16px; overflow:hidden; }
+  .process-card{ background:var(--ink); padding:38px 30px; transition:background .5s var(--ease); }
+  .process-card:hover{ background:var(--ink-soft); }
+  .process-num{ font-family:var(--font-display); font-style:italic; color:var(--zinc-500); font-size:.92rem; margin-bottom:22px; }
+  .process-card h3{ font-family:var(--font-display); font-weight:600; font-size:1.12rem; margin-bottom:12px; }
+  .process-card p{ color:var(--zinc-500); font-size:.9rem; line-height:1.7; }
+
+  /* ---------- CTA ---------- */
+  .cta{ padding:150px 0; background:var(--ink-soft); border-top:1px solid rgba(255,255,255,.08); text-align:center; }
+  .cta h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,4.4vw,3.3rem);
+    max-width:760px; margin:0 auto; line-height:1.14; letter-spacing:-.01em;
+  }
+  .cta p{ margin:24px auto 40px; color:var(--zinc-200); max-width:480px; font-size:1.04rem; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:16px 34px; font-size:13px;
+    letter-spacing:.05em; text-transform:uppercase; font-weight:600; border-radius:100px;
+    cursor:pointer; transition:transform .4s var(--ease), background .4s var(--ease);
+    background:#fff; color:var(--ink); border:none;
+  }
+  .btn:hover{ transform:translateY(-3px); background:var(--zinc-200); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:44px 0; border-top:1px solid rgba(255,255,255,.08); }
+  .footer-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:.82rem; color:var(--zinc-500); }
+  .footer-grid a:hover{ color:#fff; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .case-grid, .case:nth-child(even) .case-grid{ grid-template-columns:1fr; gap:36px; }
+    .case:nth-child(even) .case-copy, .case:nth-child(even) .case-visual{ order:initial; }
+    .process-grid{ grid-template-columns:1fr; }
+    .intro-meta{ gap:32px; }
+  }
+  @media (max-width:600px){
+    .wrap{ padding:0 22px; }
+    .mock-clinic h3, .mock-clinic .m-sub{ max-width:100%; }
+    .mock-solaris .m-body{ flex-direction:column; align-items:flex-start; }
+    .mock-solaris .m-visual{ width:100%; flex-basis:auto; height:80px; }
+    .badge-demo{ position:static; display:inline-flex; margin-bottom:14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Portfólio
+    </a>
+    <span class="nav-brand">Marcelo H. Almeida</span>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <p class="eyebrow reveal">Desenvolvimento Web</p>
+    <h1 class="page-title reveal reveal-d1">Alguns dos meus projetos.</h1>
+    <p class="page-lede reveal reveal-d2">Projetos conceituais desenvolvidos para explorar diferentes tipos de negócio — do site institucional completo à landing page enxuta, sempre pensando em como estrutura e visual trabalham juntos para gerar resultado.</p>
+
+    <div class="intro-meta reveal reveal-d2">
+      <div><p>Projetos</p><p>02 estudos de caso</p></div>
+      <div><p>Stack</p><p>HTML · CSS · JS</p></div>
+      <div><p>Foco</p><p>UI, conversão &amp; performance</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE 1 -->
+<section class="case">
+  <div class="wrap">
+    <div class="case-grid">
+      <div class="case-copy reveal">
+        <p class="case-kicker">Projeto Conceitual · Clínica de Estética</p>
+        <h2>Estética Alto Padrão</h2>
+        <p>Um site institucional pensado para transmitir sofisticação e confiança: navegação clara entre tratamentos, prova social discreta e um caminho direto até o agendamento — sem excesso de informação, sem ruído visual.</p>
+        <div class="case-tags">
+          <span>Site Institucional</span>
+          <span>3 páginas</span>
+          <span>UI / UX</span>
+        </div>
+        <a href="Projetos%20exemplos/Clinica/index.html" class="case-link" target="_blank" rel="noopener">Ver site
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="case-visual reveal reveal-d1">
+        <span class="badge-demo">Site Demonstrativo</span>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              esteticaaltopadrao.com.br
+            </div>
+          </div>
+          <div class="browser-visual">
+            <img class="browser-image" src="imagens/ImgDesenvolvimento.jpg" alt="Projeto de desenvolvimento web para clínica de estética">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE 2 -->
+<section class="case">
+  <div class="wrap">
+    <div class="case-grid">
+      <div class="case-copy reveal">
+        <p class="case-kicker">Projeto Conceitual · Aquecimento Solar</p>
+        <h2>Solaris RP</h2>
+        <p>Landing page de página única, construída com um objetivo específico: gerar orçamentos. Copy direta, argumento de economia em destaque e um formulário de contato que aparece antes de qualquer objeção.</p>
+        <div class="case-tags">
+          <span>Landing Page</span>
+          <span>Página única</span>
+          <span>Geração de leads</span>
+        </div>
+        <a href="Projetos%20exemplos/Solaris/solaris-rp.html" class="case-link" target="_blank" rel="noopener">Ver site
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="case-visual reveal reveal-d1">
+        <span class="badge-demo">Site Demonstrativo</span>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              solarisrp.com.br
+            </div>
+          </div>
+          <div class="browser-visual">
+            <img class="browser-image" src="imagens/ImgDesenvolvimento2.jpg" alt="Projeto de landing page para aquecimento solar">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="wrap">
+    <div class="process-head">
+      <p class="eyebrow reveal">Como eu trabalho</p>
+      <h2 class="reveal reveal-d1">Seu projeto em boas mãos.</h2>
+      <p class="reveal reveal-d2">Transparência, acompanhamento e alinhamento em cada etapa do desenvolvimento. O objetivo é simples: criar uma solução que represente sua empresa e esteja de acordo com o que foi planejado.</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-card reveal">
+        <p class="process-num">01</p>
+        <h3>Transparência</h3>
+        <p>Escopo e prazos definidos com clareza antes de começar — sem surpresas no meio do caminho.</p>
+      </div>
+      <div class="process-card reveal reveal-d1">
+        <p class="process-num">02</p>
+        <h3>Acompanhamento</h3>
+        <p>Atualizações periódicas do progresso, com espaço aberto para dúvidas em cada etapa.</p>
+      </div>
+      <div class="process-card reveal reveal-d2">
+        <p class="process-num">03</p>
+        <h3>Alinhamento</h3>
+        <p>O resultado final é validado com você antes da entrega, garantindo fidelidade ao que foi planejado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <h2 class="reveal">Sua empresa merece uma presença digital à altura.</h2>
+    <p class="reveal reveal-d1">Desenvolva um site profissional para apresentar seu negócio, seus serviços e facilitar o contato com novos clientes.</p>
+    <a href="https://wa.me/5517992402616?text=Ol%C3%A1%2C%20Marcelo.%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener" class="btn reveal reveal-d2">Fale comigo!</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <span>© 2026 Marcelo H. Almeida.</span>
+    <a href="index.html">← Voltar ao portfólio</a>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('siteNav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+});
+</script>
+
+</body>
+</html>

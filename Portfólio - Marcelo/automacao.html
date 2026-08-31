@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automação &amp; Sistemas Embarcados — Marcelo H. Almeida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0A;
+    --ink-soft:#0F0F12;
+    --paper:#FFFFFF;
+    --violet:#7C3AED;
+    --violet-light:#A855F7;
+    --zinc-900:#18181B;
+    --zinc-800:#232326;
+    --zinc-500:#71717A;
+    --zinc-200:#E4E4E7;
+    --font-display:'Playfair Display', Georgia, serif;
+    --font-body:'Montserrat', -apple-system, sans-serif;
+    --ease:cubic-bezier(.16,.84,.44,1);
+    --nav-h:76px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+  body{
+    background:var(--ink); color:var(--paper); font-family:var(--font-body);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  ::selection{background:var(--violet); color:#fff;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--violet-light); outline-offset:3px; border-radius:2px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:900; height:var(--nav-h);
+    display:flex; align-items:center; background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .5s var(--ease), border-color .5s var(--ease);
+  }
+  header.nav.scrolled{
+    background:rgba(10,10,10,.72); backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner{ width:100%; display:flex; align-items:center; justify-content:space-between; }
+  .back-link{
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+    color:var(--zinc-200); transition:color .3s var(--ease), gap .3s var(--ease);
+  }
+  .back-link:hover{ color:#fff; gap:14px; }
+  .back-link svg{ transition:transform .3s var(--ease); }
+  .back-link:hover svg{ transform:translateX(-3px); }
+  .nav-brand{ font-family:var(--font-display); font-size:17px; font-weight:600; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); filter:blur(4px);
+    transition:opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);}
+  .reveal.in-view{ opacity:1; transform:translateY(0); filter:blur(0);}
+  .reveal-d1.in-view{transition-delay:.1s;}
+  .reveal-d2.in-view{transition-delay:.2s;}
+  .reveal-d3.in-view{transition-delay:.3s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; align-items:center;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+  }
+  .hero-bg img{
+    width:100%; height:100%; object-fit:cover; object-position:right center;
+  }
+  .hero-bg::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(90deg, rgba(10,10,10,.94) 0%, rgba(10,10,10,.55) 45%, rgba(10,10,10,.1) 68%);
+  }
+  .hero-content{
+    position:relative; z-index:1;
+    padding:calc(var(--nav-h) + 40px) 0 60px;
+    max-width:640px;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--violet-light);
+    font-weight:600; margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:''; width:28px; height:1px; background:var(--violet-light); }
+  h1.page-title{
+    font-family:var(--font-display); font-weight:700; letter-spacing:-.01em;
+    font-size:clamp(2.3rem, 5vw, 3.6rem); line-height:1.08;
+  }
+  .hero-quote{
+    font-family:var(--font-display); font-style:italic; font-weight:500;
+    font-size:clamp(1.2rem,2.2vw,1.5rem); color:var(--zinc-200); margin-top:22px;
+  }
+  .hero-body p{ margin-top:20px; color:var(--zinc-500); font-size:1rem; line-height:1.85; max-width:520px; }
+  .hero-meta{
+    margin-top:46px; display:flex; gap:44px; flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,.14); padding-top:24px;
+  }
+  .hero-meta div p:first-child{
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--zinc-500); margin-bottom:8px;
+  }
+  .hero-meta div p:last-child{ font-family:var(--font-display); font-size:1.05rem; font-weight:600; }
+
+  /* ---------- SECTION ---------- */
+  .section{ padding:120px 0; }
+  .section-alt{ background:var(--ink-soft); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
+  h2.section-title{
+    font-family:var(--font-display); font-weight:700; letter-spacing:-.01em;
+    font-size:clamp(1.9rem,3.4vw,2.7rem); line-height:1.14; max-width:640px;
+  }
+  .section-sub{ margin-top:20px; max-width:600px; color:var(--zinc-500); font-size:1.02rem; line-height:1.8; }
+
+  /* ---------- PROCESS LIST (conceito -> construção) ---------- */
+  .steps{ margin-top:64px; }
+  .step-row{
+    display:grid; grid-template-columns:100px 1fr; gap:32px;
+    padding:34px 0; border-top:1px solid rgba(255,255,255,.1);
+    align-items:baseline;
+  }
+  .steps .step-row:last-child{ border-bottom:1px solid rgba(255,255,255,.1); }
+  .step-num{ font-family:var(--font-display); font-style:italic; color:var(--violet-light); font-size:1.4rem; }
+  .step-body h3{ font-family:var(--font-display); font-weight:600; font-size:1.25rem; margin-bottom:10px; }
+  .step-body p{ color:var(--zinc-500); font-size:.96rem; line-height:1.75; max-width:640px; }
+
+  /* ---------- FLOW DIAGRAM ---------- */
+  .flow-wrap{ margin-top:64px; }
+  .flow{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+    gap:0; padding:56px 24px; border:1px solid rgba(255,255,255,.1); border-radius:18px;
+    background:rgba(255,255,255,.02);
+  }
+  .flow-node{
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    padding:0 28px; text-align:center;
+  }
+  .flow-node .icon{
+    width:56px; height:56px; border-radius:50%; border:1px solid rgba(255,255,255,.16);
+    display:flex; align-items:center; justify-content:center; color:var(--violet-light);
+    background:rgba(255,255,255,.03);
+    transition:transform .4s var(--ease), border-color .4s var(--ease);
+  }
+  .flow-node:hover .icon{ transform:translateY(-4px); border-color:var(--violet-light); }
+  .flow-node span{ font-size:.82rem; font-weight:600; letter-spacing:.02em; }
+  .flow-arrow{ color:var(--zinc-500); flex:0 0 auto; }
+  @media (max-width:760px){
+    .flow{ flex-direction:column; gap:26px; padding:40px 24px; }
+    .flow-arrow{ transform:rotate(90deg); }
+  }
+
+  /* ---------- TECH SPEC LIST ---------- */
+  .tech-list{ margin-top:64px; }
+  .tech-row{
+    display:grid; grid-template-columns:.7fr 1.3fr; gap:40px;
+    padding:32px 0; border-top:1px solid rgba(255,255,255,.1);
+  }
+  .tech-list .tech-row:last-child{ border-bottom:1px solid rgba(255,255,255,.1); }
+  .tech-row h3{ font-family:var(--font-display); font-weight:600; font-size:1.15rem; }
+  .tech-row .tagline{ color:var(--violet-light); font-size:.82rem; margin-top:6px; font-weight:500; }
+  .tech-row p{ color:var(--zinc-500); font-size:.94rem; line-height:1.8; }
+  @media (max-width:700px){
+    .tech-row{ grid-template-columns:1fr; gap:12px; }
+  }
+
+  /* ---------- DIVIDER STATEMENT ---------- */
+  .divider{ padding:110px 0; text-align:center; }
+  .divider p.tag{
+    font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--zinc-500);
+    font-weight:600; margin-bottom:20px;
+  }
+  .divider h2{
+    display:flex;
+    justify-content:center;
+    align-items:baseline;
+    flex-wrap:nowrap;
+    gap:0.45em;
+    font-family:var(--font-display); font-weight:600; font-style:italic;
+    font-size:clamp(1.3rem, 2.6vw, 1.9rem); color:var(--zinc-200); max-width:100%; margin:0 auto;
+    line-height:1.35;
+    white-space:nowrap;
+  }
+  .divider h2 b{ font-style:normal; font-weight:700; color:#fff; }
+  @media (max-width:900px){
+    .divider h2{ white-space:normal; flex-wrap:wrap; }
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-note{ color:var(--zinc-500); font-size:.9rem; margin-top:18px; max-width:520px; }
+  .gallery{
+    margin-top:56px; display:grid; grid-template-columns:1.4fr 1fr; grid-auto-rows:200px; gap:16px;
+  }
+  .gallery-item{
+    border-radius:14px; overflow:hidden; position:relative;
+    border:1px solid rgba(255,255,255,.1);
+    background:linear-gradient(155deg, var(--zinc-900), #0c0c0e);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    transition:border-color .4s var(--ease), transform .5s var(--ease);
+  }
+  .gallery-item:hover{ transform:translateY(-4px); border-color:rgba(255,255,255,.25); }
+  .gallery-item.has-photo{ padding:0; }
+  .gallery-item.has-photo img{ width:100%; height:100%; object-fit:cover; }
+  .gallery-item .icon{ color:var(--zinc-500); opacity:.7; }
+  .gallery-item .label{ font-size:.78rem; color:var(--zinc-500); letter-spacing:.04em; }
+  .gallery-item.tall{ grid-row:span 2; }
+  @media (max-width:760px){
+    .gallery{ grid-template-columns:1fr; grid-auto-rows:220px; }
+    .gallery-item.tall{ grid-row:span 1; }
+  }
+
+  /* ---------- REFLECTION ---------- */
+  .reflection p{ margin-top:20px; max-width:720px; color:var(--zinc-500); font-size:1.02rem; line-height:1.9; }
+  .reflection p:first-of-type{ margin-top:36px; }
+
+  /* ---------- CLOSING ---------- */
+  .closing{ padding:150px 0; text-align:center; background:var(--ink-soft); border-top:1px solid rgba(255,255,255,.08); }
+  .closing h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,3.8vw,2.8rem);
+    max-width:700px; margin:0 auto; line-height:1.18; letter-spacing:-.01em;
+  }
+  .closing p{ margin:24px auto 0; max-width:520px; color:var(--zinc-200); font-size:1.02rem; line-height:1.8; }
+  .closing .back{
+    margin-top:44px; display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-display); font-style:italic; font-size:1.05rem;
+    padding-bottom:4px; border-bottom:1px solid rgba(255,255,255,.3);
+    transition:border-color .3s var(--ease), gap .3s var(--ease);
+  }
+  .closing .back:hover{ border-color:#fff; gap:14px; }
+
+  footer{ padding:36px 0; }
+  .footer-grid{ display:flex; justify-content:center; font-size:.8rem; color:var(--zinc-500); }
+</style>
+</head>
+<body>
+
+<header class="nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Portfólio
+    </a>
+    <span class="nav-brand">Marcelo H. Almeida</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="imagens/ImgHeroAutomacoes.png" alt="Braço robótico em projeto de automação" loading="eager"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <p class="eyebrow reveal">Projeto em destaque</p>
+      <h1 class="page-title reveal reveal-d1">Automação &amp; Sistemas Embarcados</h1>
+      <p class="hero-quote reveal reveal-d2">"Um dos projetos de que mais tenho orgulho."</p>
+      <div class="hero-body reveal reveal-d3">
+        <p>Desenvolvido como Trabalho de Conclusão do curso técnico em Eletrônica na Etec Philadelpho Gouvêa Netto, este projeto nasceu da ideia de explorar uma alternativa mais acessível para a construção de um protótipo funcional de braço robótico.</p>
+        <p>Inspirado em sistemas robóticos industriais, o projeto integra eletrônica, programação, sistemas embarcados e controle via Wi-Fi em uma estrutura funcional desenvolvida para fins educacionais e experimentais.</p>
+      </div>
+      <div class="hero-meta reveal reveal-d3">
+        <div><p>Categoria</p><p>TCC · Automação</p></div>
+        <div><p>Curso</p><p>Eletrônica · ETEC</p></div>
+        <div><p>Núcleo</p><p>ESP32 · PCA9685 · Wi-Fi</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DO CONCEITO À CONSTRUÇÃO -->
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow reveal">O processo</p>
+    <h2 class="section-title reveal reveal-d1">Do conceito à construção.</h2>
+    <p class="section-sub reveal reveal-d2">Da ideia inicial até um protótipo funcional, o projeto passou por quatro grandes etapas.</p>
+
+    <div class="steps">
+      <div class="step-row reveal">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <h3>A ideia</h3>
+          <p>Explorar como conceitos presentes na robótica industrial poderiam ser aplicados na construção de um protótipo funcional.</p>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-d1">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <h3>A estrutura</h3>
+          <p>Desenvolvimento e montagem da estrutura física responsável pelos movimentos e funcionamento mecânico do braço.</p>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-d2">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <h3>O sistema</h3>
+          <p>Integração entre microcontroladores, driver de servomotores e aplicações web para controle remoto do braço robótico.</p>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-d3">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <h3>O controle</h3>
+          <p>Desenvolvimento da programação embarcada e de uma interface web para controlar o braço através de uma conexão Wi‑Fi.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTROLE ATRAVÉS DA WEB -->
+<section class="section section-alt">
+  <div class="wrap">
+    <p class="eyebrow reveal">Como o sistema funciona</p>
+    <h2 class="section-title reveal reveal-d1">Controle através da Web</h2>
+    <p class="section-sub reveal reveal-d2">Do comando enviado pelo navegador até o movimento físico do braço, em quatro etapas.</p>
+
+    <div class="flow-wrap reveal reveal-d2">
+      <div class="flow">
+        <div class="flow-node">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
+          <span>ESP32</span>
+        </div>
+        <svg class="flow-arrow" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h22M17 2l6 6-6 6"/></svg>
+        <div class="flow-node">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5a11 11 0 0 1 14 0M8 16a6.5 6.5 0 0 1 8 0M12 19.5h.01"/></svg></div>
+          <span>Wi-Fi</span>
+        </div>
+        <svg class="flow-arrow" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h22M17 2l6 6-6 6"/></svg>
+        <div class="flow-node">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <span>Interface Web</span>
+        </div>
+        <svg class="flow-arrow" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h22M17 2l6 6-6 6"/></svg>
+        <div class="flow-node">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
+          <span>Servomotores</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGIAS -->
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow reveal">A caixa de ferramentas</p>
+    <h2 class="section-title reveal reveal-d1">Tecnologias utilizadas</h2>
+    <p class="section-sub reveal reveal-d2">Para transformar o projeto em um sistema funcional, diferentes tecnologias precisaram trabalhar em conjunto — desde o processamento dos comandos até o controle físico dos movimentos.</p>
+
+    <div class="tech-list">
+      <div class="tech-row reveal">
+        <div><h3>ESP32</h3><p class="tagline">O cérebro do sistema</p></div>
+        <p>Utilizado como o microcontrolador principal do projeto, o ESP32 é responsável por executar a lógica do sistema, processar os comandos enviados pela interface e controlar a comunicação entre os diferentes componentes.</p>
+      </div>
+      <div class="tech-row reveal">
+        <div><h3>PCA9685</h3><p class="tagline">Controle dos movimentos</p></div>
+        <p>O módulo PCA9685 foi utilizado para gerenciar os sinais PWM responsáveis pelo controle dos múltiplos servomotores do braço robótico.</p>
+      </div>
+      <div class="tech-row reveal">
+        <div><h3>Servomotores</h3><p class="tagline">Transformando comandos em movimento</p></div>
+        <p>Responsáveis pela movimentação das articulações do braço, os servomotores recebem os comandos gerados pelo sistema e transformam os sinais de controle em movimentos físicos.</p>
+      </div>
+      <div class="tech-row reveal">
+        <div><h3>Wi‑Fi</h3><p class="tagline">Uma rede para o controle</p></div>
+        <p>O ESP32 cria sua própria rede Wi‑Fi, permitindo que dispositivos como celulares, tablets ou computadores se conectem diretamente ao sistema e acessem o endereço IP através de um navegador.</p>
+      </div>
+      <div class="tech-row reveal">
+        <div><h3>Interface Web</h3><p class="tagline">O controle através do navegador</p></div>
+        <p>Permite controlar o braço robótico diretamente pelo navegador de qualquer dispositivo conectado à rede criada pelo ESP32, sem necessidade de instalar aplicativos específicos.</p>
+      </div>
+      <div class="tech-row reveal">
+        <div><h3>HTML, CSS &amp; JavaScript</h3><p class="tagline">A experiência de controle</p></div>
+        <p>Tecnologias utilizadas para desenvolver a interface visual e os controles responsáveis pela interação entre o usuário e o sistema embarcado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<section class="divider">
+  <div class="wrap">
+    <p class="tag reveal">Processo de desenvolvimento</p>
+    <h2 class="reveal reveal-d1"><b>01</b> Estrutura &nbsp;·&nbsp; <b>02</b> Eletrônica &nbsp;·&nbsp; <b>03</b> Programação &nbsp;·&nbsp; <b>04</b> Interface</h2>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="section section-alt">
+  <div class="wrap">
+    <p class="eyebrow reveal">Registro</p>
+    <h2 class="section-title reveal reveal-d1">Galeria do projeto</h2>
+    <p class="gallery-note reveal reveal-d2">Reservei os espaços abaixo para os registros reais do processo — solda, protoboard, diagrama de fiação e montagem das engrenagens. Assim que você me enviar as fotos, encaixo cada uma no lugar certo.</p>
+
+    <div class="gallery">
+      <div class="gallery-item has-photo tall reveal">
+        <img src="imagens/ImgVisaoGeral.png" alt="Visão geral do braço robótico">
+      </div>
+      <div class="gallery-item has-photo reveal reveal-d1">
+        <img src="imagens/ImgCircuito.png" alt="Circuito eletrônico do projeto">
+      </div>
+      <div class="gallery-item has-photo reveal reveal-d1">
+        <img src="imagens/ImgProtoboard.png" alt="Montagem no protoboard">
+      </div>
+      <div class="gallery-item has-photo reveal reveal-d2">
+        <img src="imagens/ImgDiagrama.png" alt="Diagrama de fiação do sistema">
+      </div>
+      <div class="gallery-item has-photo reveal reveal-d2">
+        <img src="imagens/ImgMotores.png" alt="Motores e montagem das engrenagens">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLEXÃO -->
+<section class="section reflection">
+  <div class="wrap">
+    <p class="eyebrow reveal">Por que isso importa</p>
+    <h2 class="section-title reveal reveal-d1">Tecnologia como base para criar soluções</h2>
+    <p class="reveal reveal-d2">Projetos como este representam uma parte importante da minha formação e da forma como enxergo a tecnologia.</p>
+    <p class="reveal reveal-d2">Trabalhar com eletrônica, sistemas embarcados e programação me ensinou a olhar para uma solução de forma mais ampla — não apenas para o resultado final, mas também para a lógica, os componentes e as diferentes tecnologias necessárias para transformar uma ideia em algo funcional.</p>
+    <p class="reveal reveal-d3">Essa experiência influencia diretamente a forma como desenvolvo outros projetos. Seja criando um site, uma interface ou explorando novas tecnologias, busco entender como cada parte se conecta e como diferentes ferramentas podem trabalhar juntas para criar uma solução completa.</p>
+    <p class="reveal reveal-d3">Mais do que um projeto de eletrônica, o braço robótico representa a capacidade de partir de uma ideia, enfrentar problemas ao longo do processo e transformar conhecimento técnico em algo real e funcional.</p>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="wrap">
+    <h2 class="reveal">Uma ideia. Diferentes tecnologias.<br>Uma solução funcional.</h2>
+    <p class="reveal reveal-d1">O braço robótico reúne eletrônica, sistemas embarcados, programação, comunicação sem fio e desenvolvimento web em um único projeto funcional — da estrutura física ao controle através do navegador, cada parte foi desenvolvida para funcionar em conjunto.</p>
+    <a href="index.html#projetos" class="back reveal reveal-d2">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Voltar ao portfólio
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <span>© 2026 Marcelo H. Almeida.</span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('siteNav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+});
+</script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados — Estética Alto Padrão</title>
+<meta name="description" content="Apresentação conceitual de resultados e protocolos de uma clínica de estética facial e corporal.">
+<meta name="theme-color" content="#F6F2E9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F6F2E9' stroke='%23A9895A' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='serif' font-size='20' fill='%234B5940'%3EEA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F2E9;
+    --cream-2:#EFE9DB;
+    --sand:#E7DCC6;
+    --moss:#4B5940;
+    --moss-dark:#2C3527;
+    --moss-deep:#1C2318;
+    --ink:#241E17;
+    --ink-soft:#5C5346;
+    --gold:#A9895A;
+    --gold-soft:#C7AB79;
+    --line:rgba(36,30,23,0.12);
+    --white:#FFFDF8;
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:10px;
+    --max:1240px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+
+  h1,h2,h3,.serif{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  em{
+    font-style:italic;
+    color:var(--moss);
+    font-weight:500;
+  }
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 40px;}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:12.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--moss);
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  /* ---------- reveal animation ---------- */
+  .reveal{opacity:1;transform:none;transition:opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);}
+  .js .reveal:not(.in){opacity:0;transform:translateY(28px);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.1s;}
+  .reveal-delay-2{transition-delay:.22s;}
+  .reveal-delay-3{transition-delay:.34s;}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- framed image signature ---------- */
+  .framed{
+    position:relative;
+    display:block;
+  }
+  .framed::after{
+    content:"";
+    position:absolute;
+    inset:18px -18px -18px 18px;
+    border:1px solid var(--gold);
+    border-radius:var(--radius-lg);
+    z-index:0;
+    pointer-events:none;
+    transition:inset .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .framed img, .framed .img-el{
+    position:relative;
+    z-index:1;
+    border-radius:var(--radius-lg);
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .framed:hover::after{inset:14px -14px -14px 14px;}
+
+  .framed.frame-sm::after{inset:12px -12px -12px 12px;border-radius:var(--radius-md);}
+  .framed.frame-sm img{border-radius:var(--radius-md);}
+  .framed.frame-sm:hover::after{inset:9px -9px -9px 9px;}
+
+  /* =================== NAV =================== */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(246,242,233,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .4s ease, background .4s ease;
+  }
+  header.scrolled{
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:20px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    letter-spacing:0.01em;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo .mark{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;
+    letter-spacing:0.02em;
+    color:var(--moss);
+    font-weight:600;
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-size:14.5px;
+    font-weight:600;
+  }
+  .nav-links a{
+    position:relative;
+    padding:4px 0;
+    color:var(--ink-soft);
+    transition:color .3s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;left:0;bottom:0;
+    width:0;height:1px;
+    background:var(--gold);
+    transition:width .3s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a.active{color:var(--ink);}
+  .nav-links a.active::after{width:100%;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 26px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, background .35s ease, color .35s ease, border-color .35s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--moss);
+    color:var(--white);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 26px -10px rgba(75,89,64,0.55);
+    background:var(--moss-dark);
+  }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{
+    border-color:var(--moss);
+    color:var(--moss);
+    transform:translateY(-2px);
+  }
+  .btn-on-dark{
+    background:var(--gold-soft);
+    color:var(--moss-deep);
+  }
+  .btn-on-dark:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 26px -10px rgba(199,171,121,0.45);
+    background:#D6BE8E;
+  }
+  .btn-sm{padding:11px 20px;font-size:13px;}
+
+  .nav-cta{display:flex;align-items:center;gap:22px;}
+  .menu-btn{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:50%;
+    cursor:pointer;
+  }
+  .menu-btn svg{width:20px;height:20px;}
+
+  /* =================== HERO (full-bleed editorial photo) =================== */
+  .hero{
+    position:relative;
+    height:94vh;
+    min-height:760px;
+    max-height:920px;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+  .hero-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:58% 22%;
+    display:block;
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(28,35,24,0.04) 0%, rgba(28,35,24,0.06) 40%, rgba(28,35,24,0.42) 82%, rgba(28,35,24,0.62) 100%);
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    padding-bottom:104px;
+  }
+  .hero-copy{
+    max-width:540px;
+    color:var(--white);
+  }
+  .hero-copy .eyebrow{color:var(--gold-soft);}
+  .hero-copy .eyebrow::before{background:var(--gold-soft);}
+  .hero-copy h1{
+    font-size:clamp(40px,5vw,64px);
+    line-height:1.06;
+    margin:22px 0 24px;
+    color:var(--white);
+  }
+  .hero-copy h1 em{color:var(--gold-soft);}
+  .hero-copy p{
+    font-size:17.5px;
+    line-height:1.7;
+    color:rgba(255,253,248,0.86);
+    max-width:460px;
+    margin-bottom:38px;
+  }
+  .hero-ctas{
+    display:flex;
+    align-items:center;
+    gap:26px;
+    flex-wrap:wrap;
+    margin-bottom:46px;
+  }
+  .link-inline{
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--ink);
+    border-bottom:1px solid var(--gold);
+    padding-bottom:3px;
+    transition:color .3s ease, border-color .3s ease;
+  }
+  .link-inline:hover{color:var(--moss);border-color:var(--moss);}
+  .hero-copy .link-inline{
+    color:var(--white);
+    border-bottom-color:var(--gold-soft);
+  }
+  .hero-copy .link-inline:hover{color:var(--gold-soft);}
+
+  .trust-line{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-size:12.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:700;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+  }
+  .trust-line span{display:flex;align-items:center;gap:8px;}
+  .trust-line span::before{
+    content:"";
+    width:5px;height:5px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .hero-copy .trust-line{
+    color:rgba(255,253,248,0.8);
+    border-top-color:rgba(255,253,248,0.22);
+  }
+  .hero-copy .trust-line span::before{background:var(--gold-soft);}
+
+  @media (max-width:860px){
+    .hero{height:100svh;min-height:640px;}
+    .hero-content{padding-bottom:72px;}
+  }
+  @media (max-width:640px){
+    .hero-content{padding-bottom:52px;}
+    .hero-copy{max-width:100%;}
+  }
+
+  /* =================== SECTION GENERIC =================== */
+  section{padding:120px 0;}
+  section[id]{scroll-margin-top:92px;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:64px;
+  }
+  .section-head h2{
+    font-size:clamp(30px,3.4vw,42px);
+    line-height:1.16;
+    margin-top:18px;
+  }
+  .section-head p.lede{
+    margin-top:20px;
+    font-size:16.5px;
+    line-height:1.75;
+    color:var(--ink-soft);
+  }
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head.center .eyebrow{margin:0 auto;}
+
+  .bg-sand{background:var(--sand);}
+  .bg-cream2{background:var(--cream-2);}
+
+  /* =================== CLÍNICA (about) =================== */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.95fr 1.05fr;
+    gap:80px;
+    align-items:center;
+  }
+  .about-media .framed{aspect-ratio:1/1.05;}
+  .about-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:38px 0 40px;
+  }
+  .about-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    padding:24px 20px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .about-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px -24px rgba(36,30,23,0.25);
+    border-color:var(--gold-soft);
+  }
+  .about-card .num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:15px;
+    display:block;
+    margin-bottom:10px;
+  }
+  .about-card p{
+    font-size:14px;
+    font-weight:700;
+    line-height:1.4;
+    color:var(--ink);
+  }
+  .about-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+
+  /* =================== TRATAMENTOS =================== */
+  .treat-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+  }
+  .treat-card{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    border:1px solid var(--line);
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+  }
+  .treat-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 30px 50px -28px rgba(36,30,23,0.32);
+  }
+  .treat-media{
+    height:230px;
+    overflow:hidden;
+  }
+  .treat-media img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .treat-card:hover .treat-media img{transform:scale(1.06);}
+  .treat-body{padding:28px 26px 30px;}
+  .treat-body h3{font-size:22px;margin-bottom:10px;}
+  .treat-body p{font-size:14.5px;line-height:1.65;color:var(--ink-soft);margin-bottom:18px;}
+  .pill-list{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.02em;
+    padding:7px 13px;
+    border-radius:999px;
+    background:var(--cream-2);
+    color:var(--moss-dark);
+    border:1px solid var(--line);
+  }
+
+  /* =================== BENEFÍCIOS =================== */
+  .diff-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+  }
+  .diff-card{
+    padding:42px 30px;
+    border-radius:var(--radius-md);
+    background:var(--white);
+    border:1px solid var(--line);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .diff-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 26px 46px -28px rgba(36,30,23,0.28);
+  }
+  .diff-icon{
+    width:50px;height:50px;
+    border-radius:50%;
+    background:var(--moss);
+    color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:26px;
+  }
+  .diff-card h3{font-size:20px;margin-bottom:12px;}
+  .diff-card p{font-size:14.5px;line-height:1.7;color:var(--ink-soft);}
+
+  /* =================== RESULTADOS =================== */
+  .stats-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    margin-bottom:72px;
+  }
+  .stat-item{
+    background:var(--white);
+    padding:34px 26px;
+    text-align:center;
+    transition:background .35s ease;
+  }
+  .stat-item:hover{background:var(--cream-2);}
+  .stat-num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:clamp(28px,3vw,38px);
+    color:var(--moss);
+    display:block;
+    margin-bottom:8px;
+  }
+  .stat-num .unit{font-size:0.55em;font-style:normal;color:var(--gold);font-weight:700;margin-left:1px;}
+  .stat-label{
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--ink-soft);
+    font-weight:700;
+    line-height:1.4;
+  }
+
+  .results-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+  }
+  .result-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:16px 16px 28px;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+  }
+  .result-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 30px 50px -28px rgba(36,30,23,0.28);
+  }
+  .result-card .framed{aspect-ratio:4/3.4;margin-bottom:26px;}
+  .result-body{padding:0 10px;}
+  .result-body .tag{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-weight:700;
+    color:var(--gold);
+  }
+  .result-body h3{font-size:19px;margin:10px 0 12px;line-height:1.28;}
+  .result-body p{font-size:14px;line-height:1.65;color:var(--ink-soft);margin-bottom:22px;}
+  .result-stats-row{
+    display:flex;
+    gap:0;
+    border-top:1px solid var(--line);
+    padding-top:18px;
+  }
+  .result-stats-row div{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .result-stats-row div + div{border-left:1px solid var(--line);padding-left:16px;margin-left:16px;}
+  .result-stats-row strong{
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .result-stats-row span{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--ink-soft);
+    font-weight:700;
+  }
+  .result-note{
+    margin-top:40px;
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  @media (max-width:1080px){
+    .stats-strip{grid-template-columns:repeat(2,1fr);}
+    .results-grid{grid-template-columns:1fr;gap:32px;}
+  }
+  @media (max-width:640px){
+    .stats-strip{grid-template-columns:1fr;}
+  }
+
+  /* =================== AVALIAÇÃO =================== */
+  .testi-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  #depoimentos .testi-grid{display:none;}
+  .demo-placeholder{
+    padding:28px 30px;
+    border:1px dashed var(--gold);
+    border-radius:var(--radius-md);
+    color:var(--ink-soft);
+    text-align:center;
+    font-size:14.5px;
+    line-height:1.7;
+  }
+  .testi-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:34px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .testi-card:hover{transform:translateY(-6px);box-shadow:0 24px 44px -28px rgba(36,30,23,0.26);}
+  .testi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .stars{display:flex;gap:3px;color:var(--gold);}
+  .google-badge{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .google-badge svg{width:15px;height:15px;flex-shrink:0;}
+  .testi-quote{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    line-height:1.55;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:28px;
+  }
+  .testi-who{display:flex;align-items:center;gap:12px;}
+  .testi-avatar{
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--moss);
+    color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    flex-shrink:0;
+  }
+  .testi-who-text b{font-size:14px;display:block;}
+  .testi-who-text{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .pin{color:var(--gold);}
+
+  /* =================== CTA FINAL =================== */
+  .cta-final{
+    background:var(--moss-deep);
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-final::before{
+    content:"";
+    position:absolute;
+    width:640px;height:640px;
+    border:1px solid rgba(199,171,121,0.18);
+    border-radius:50%;
+    top:-260px;right:-200px;
+  }
+  .cta-final::after{
+    content:"";
+    position:absolute;
+    width:420px;height:420px;
+    border:1px solid rgba(199,171,121,0.14);
+    border-radius:50%;
+    bottom:-220px;left:-140px;
+  }
+  .cta-final-inner{
+    position:relative;z-index:1;
+    text-align:center;
+    max-width:620px;
+    margin:0 auto;
+  }
+  .cta-final h2{
+    color:var(--white);
+    font-size:clamp(32px,4.4vw,50px);
+    line-height:1.12;
+    margin:20px 0 18px;
+  }
+  .cta-final p{
+    color:rgba(255,253,248,0.78);
+    font-size:17px;
+    margin-bottom:38px;
+  }
+  .cta-final .eyebrow{color:var(--gold-soft);}
+  .cta-final .eyebrow::before{background:var(--gold-soft);}
+
+  /* =================== FOOTER =================== */
+  footer{
+    background:var(--cream-2);
+    padding:80px 0 32px;
+    border-top:1px solid var(--line);
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:50px;
+    padding-bottom:56px;
+  }
+  .footer-brand .logo{margin-bottom:18px;}
+  .footer-brand p{
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.7;
+    max-width:280px;
+  }
+  .footer-social{display:flex;gap:14px;margin-top:22px;}
+  .social-btn{
+    width:38px;height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .3s ease, transform .3s ease, background .3s ease;
+  }
+  .social-btn:hover{border-color:var(--moss);transform:translateY(-3px);background:var(--white);}
+  .footer-col h4{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:20px;
+  }
+  .footer-col ul li{margin-bottom:13px;}
+  .footer-col ul li a{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    transition:color .3s ease;
+  }
+  .footer-col ul li a:hover{color:var(--moss);}
+  .footer-bottom{
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    line-height:1.7;
+  }
+
+  /* =================== BENEFÍCIOS 4-UP =================== */
+  .diff-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+  @media (max-width:1080px){.diff-grid-4{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.diff-grid-4{grid-template-columns:1fr;}}
+
+  /* =================== PROTOCOLO / HIGHLIGHT BLOCK =================== */
+  .protocolo-block{
+    max-width:760px;
+    margin:0 auto;
+    text-align:center;
+    padding:64px 56px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+  }
+  .protocolo-block h2{margin-top:18px;}
+  .protocolo-block p.lede{margin:20px auto 34px;}
+  @media (max-width:640px){.protocolo-block{padding:44px 24px;}}
+
+  /* =================== ESPAÇO MOSAIC =================== */
+  .espaco-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    grid-template-rows:1fr 1fr;
+    gap:22px;
+  }
+  .espaco-grid .espaco-a{grid-row:1/3;}
+  .espaco-grid .espaco-a .framed{height:100%;}
+  .espaco-grid .espaco-a .framed img{height:100%;}
+  .espaco-grid .espaco-b .framed, .espaco-grid .espaco-c .framed{aspect-ratio:4/3.1;}
+  .espaco-caption{
+    margin-top:28px;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+  @media (max-width:860px){
+    .espaco-grid{grid-template-columns:1fr;grid-template-rows:auto;gap:20px;}
+    .espaco-grid .espaco-a{grid-row:auto;}
+    .espaco-grid .espaco-a .framed{aspect-ratio:4/3.1;height:auto;}
+  }
+
+  /* =================== FILOSOFIA BANNER =================== */
+  .philosophy-banner{
+    position:relative;
+    height:64vh;
+    min-height:440px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:var(--radius-lg);
+  }
+  .philosophy-banner img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;}
+  .philosophy-banner::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(28,35,24,0.12) 0%, rgba(28,35,24,0.5) 100%);
+  }
+  .philosophy-banner .philosophy-text{
+    position:relative;z-index:1;
+    text-align:center;color:var(--white);
+    max-width:620px;padding:0 24px;
+  }
+  .philosophy-banner .philosophy-text .eyebrow{color:var(--gold-soft);}
+  .philosophy-banner .philosophy-text .eyebrow::before{background:var(--gold-soft);}
+  .philosophy-banner h2{
+    color:var(--white);
+    font-size:clamp(28px,4vw,44px);
+    line-height:1.3;
+    margin-top:18px;
+  }
+  @media (max-width:640px){.philosophy-banner{height:52vh;min-height:380px;}}
+
+  /* =================== RESPONSIVE =================== */
+  @media (max-width:1080px){
+    .about-grid{grid-template-columns:1fr;}
+    .about-media{order:-1;}
+    .treat-grid, .diff-grid, .testi-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-grid{grid-template-columns:1fr 1fr;row-gap:40px;}
+  }
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .menu-btn{display:flex;}
+    .about-cards{grid-template-columns:1fr;}
+    section{padding:88px 0;}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 22px;}
+    nav{padding:18px 22px;}
+    .logo{font-size:17px;}
+    .logo .mark{width:30px;height:30px;font-size:12px;}
+    .nav-cta{gap:10px;}
+    .nav-cta > .btn{display:none;}
+    .treat-grid, .diff-grid, .testi-grid{grid-template-columns:1fr;}
+    .hero-ctas{flex-direction:column;align-items:flex-start;gap:18px;}
+    .hero-copy h1{font-size:clamp(36px,11vw,48px);}
+    .hero-copy p{font-size:15.5px;line-height:1.6;margin-bottom:28px;}
+    .hero-ctas{margin-bottom:30px;}
+    .trust-line{gap:10px 16px;padding-top:18px;font-size:10.5px;line-height:1.45;}
+    .btn{min-height:44px;}
+    .footer-grid{grid-template-columns:1fr;}
+    .framed::after{inset:12px -12px -12px 12px;}
+  }
+
+  @media (max-width:860px){
+    body.menu-open{overflow:hidden;}
+    header.menu-open{background:var(--cream);}
+    header.menu-open .nav-links{
+      display:flex;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      padding:8px 22px 18px;
+      background:var(--cream);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 18px 30px -24px rgba(36,30,23,0.35);
+    }
+    header.menu-open .nav-links a{padding:14px 0;}
+  }
+
+  :focus-visible{
+    outline:2px solid var(--moss);
+    outline-offset:3px;
+  }
+
+  #resultados, #depoimentos{scroll-margin-top:88px;}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <nav class="wrap">
+    <a href="index.html" class="logo"><span class="mark">EA</span>Estética Alto Padrão</a>
+    <div class="nav-links" id="primary-navigation">
+      <a href="index.html">A Clínica</a>
+      <a href="tratamentos.html">Tratamentos</a>
+      <a href="resultados.html" class="active">Resultados</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#agendar" class="btn btn-primary btn-sm">Agendar avaliação</a>
+      <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="primary-navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-photo">
+      <img src="assets/imagens/ImgResultadosHero.png" alt="Retrato editorial de cliente da Estética Alto Padrão, evidenciando a naturalidade dos resultados" fetchpriority="high">
+    </div>
+    <div class="hero-content">
+      <div class="wrap">
+        <div class="hero-copy reveal in">
+          <span class="eyebrow">Resultados</span>
+          <h1>Provas do cuidado<br><em>que construímos juntos.</em></h1>
+          <p>Cada protocolo é acompanhado, medido e documentado — para que a confiança que você deposita em nós se traduza em resultados visíveis e consistentes.</p>
+          <div class="hero-ctas">
+            <a href="#agendar" class="btn btn-primary">Agendar avaliação</a>
+            <a href="#resultados" class="link-inline">Ver resultados ↓</a>
+          </div>
+          <div class="trust-line">
+            <span>Acompanhamento documentado</span>
+            <span>Protocolos individualizados</span>
+            <span>Conteúdo demonstrativo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTADOS ============ -->
+  <section id="resultados">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Resultados</span>
+        <h2>Uma apresentação visual do cuidado.</h2>
+        <p class="lede">As imagens desta página são referências visuais para um projeto conceitual. Casos, números e resultados reais devem ser inseridos somente com autorização.</p>
+      </div>
+
+      <div class="stats-strip reveal">
+        <div class="stat-item">
+          <span class="stat-num">—</span>
+          <span class="stat-label">Dado institucional reservado</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">—</span>
+          <span class="stat-label">Número de protocolos reservado</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">—</span>
+          <span class="stat-label">Avaliações reais não publicadas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">—</span>
+          <span class="stat-label">Indicadores reservados para dados reais</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card reveal">
+          <div class="framed frame-sm">
+            <img src="assets/imagens/ImgBocaResultados.png" alt="Protocolo de rejuvenescimento facial conduzido na clínica" loading="lazy">
+          </div>
+          <div class="result-body">
+            <span class="tag">Imagem ilustrativa · Facial</span>
+            <h3>Espaço para um caso autorizado</h3>
+            <p>Área reservada para apresentar contexto, protocolo e evolução somente quando houver dados reais e autorização de uso.</p>
+          </div>
+        </div>
+
+        <div class="result-card reveal reveal-delay-1">
+          <div class="framed frame-sm">
+            <img src="assets/imagens/ImgRejuvenescimentoResultados.jpg" alt="Protocolo corporal personalizado conduzido na clínica" loading="lazy">
+          </div>
+          <div class="result-body">
+            <span class="tag">Imagem ilustrativa · Corporal</span>
+            <h3>Espaço para um caso autorizado</h3>
+            <p>Área reservada para apresentar contexto, protocolo e evolução somente quando houver dados reais e autorização de uso.</p>
+          </div>
+        </div>
+
+        <div class="result-card reveal reveal-delay-2">
+          <div class="framed frame-sm">
+            <img src="assets/imagens/ImgTecnologiasTratamentos.jpg" alt="Protocolo com tecnologia estética conduzido na clínica" loading="lazy">
+          </div>
+          <div class="result-body">
+            <span class="tag">Imagem ilustrativa · Tecnologia</span>
+            <h3>Espaço para um caso autorizado</h3>
+            <p>Área reservada para apresentar contexto, protocolo e evolução somente quando houver dados reais e autorização de uso.</p>
+          </div>
+        </div>
+      </div>
+      <p class="result-note">Imagens e textos ilustrativos, com fins de demonstração. Dados clínicos e relatos reais dependem de autorização e avaliação profissional.</p>
+    </div>
+  </section>
+
+  <!-- ============ DEPOIMENTOS ============ -->
+  <section id="depoimentos" class="bg-cream2">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Depoimentos</span>
+        <h2>Espaço para histórias reais.</h2>
+        <p class="lede">Esta área está reservada para depoimentos autorizados de clientes. O projeto demonstrativo não apresenta avaliações inventadas.</p>
+      </div>
+
+      <div class="demo-placeholder reveal">Depoimentos reais poderão ser inseridos aqui após autorização e publicação pela clínica.</div>
+
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div>
+            <div class="testi-top">
+              <div class="stars" aria-label="5 de 5 estrelas">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <span class="google-badge">
+                <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.4C29.5 34.7 26.9 35.6 24 35.6c-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.5 5.4C40.4 36.6 44 30.9 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+                Avaliado no Google
+              </span>
+            </div>
+            <p class="testi-quote">“Fui pela primeira vez insegura e saí encantada. A avaliação foi minuciosa, sem empurrar procedimento nenhum, e o resultado ficou natural — exatamente o que eu queria.”</p>
+          </div>
+          <div class="testi-who">
+            <div class="testi-avatar">MF</div>
+            <div class="testi-who-text"><b>Marina F.</b><span class="pin">●</span> Jardins, São Paulo</div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-1">
+          <div>
+            <div class="testi-top">
+              <div class="stars" aria-label="5 de 5 estrelas">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <span class="google-badge">
+                <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.4C29.5 34.7 26.9 35.6 24 35.6c-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.5 5.4C40.4 36.6 44 30.9 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+                Avaliado no Google
+              </span>
+            </div>
+            <p class="testi-quote">“Já tinha feito procedimentos em outros lugares e nunca me senti tão bem explicada sobre cada etapa. O ambiente é discreto e a equipe é extremamente cuidadosa.”</p>
+          </div>
+          <div class="testi-who">
+            <div class="testi-avatar">RC</div>
+            <div class="testi-who-text"><b>Renata C.</b><span class="pin">●</span> Itaim Bibi, São Paulo</div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-2">
+          <div>
+            <div class="testi-top">
+              <div class="stars" aria-label="5 de 5 estrelas">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <span class="google-badge">
+                <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.4C29.5 34.7 26.9 35.6 24 35.6c-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.5 5.4C40.4 36.6 44 30.9 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+                Avaliado no Google
+              </span>
+            </div>
+            <p class="testi-quote">“O acompanhamento do protocolo corporal foi muito além do que eu esperava. Cada sessão tinha um objetivo claro e a equipe sempre ajustava conforme minha resposta.”</p>
+          </div>
+          <div class="testi-who">
+            <div class="testi-avatar">CL</div>
+            <div class="testi-who-text"><b>Camila L.</b><span class="pin">●</span> Moema, São Paulo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section id="agendar" class="cta-final">
+    <div class="wrap cta-final-inner reveal">
+      <span class="eyebrow">Agende agora</span>
+      <h2>Seu próximo passo<br>começa aqui.</h2>
+      <p>Agende sua avaliação e descubra o protocolo ideal para você.</p>
+      <a href="#agendar" class="btn btn-on-dark">Agendar avaliação</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="mark">EA</span>Estética Alto Padrão</a>
+        <p>Clínica de estética facial e corporal de alto padrão. Avaliação personalizada, tecnologia de precisão e resultados naturais.</p>
+        <div class="footer-social">
+          <span class="social-btn" aria-label="WhatsApp" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21l1.4-4.9A8.5 8.5 0 1 1 8 19.6L3 21Z"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="index.html">A Clínica</a></li>
+          <li><a href="tratamentos.html">Tratamentos</a></li>
+          <li><a href="resultados.html">Resultados</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Endereço</h4>
+        <ul>
+          <li>Rua das Orquídeas, 482</li>
+          <li>Jardins — São Paulo, SP</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Horário</h4>
+        <ul>
+          <li>Segunda a sábado</li>
+          <li>9h às 19h</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Estética Alto Padrão — Projeto conceitual desenvolvido para demonstração. Dados e imagens são ilustrativos.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+  // header scroll state
+  const header = document.getElementById('siteHeader');
+  const menuButton = document.querySelector('.menu-btn');
+  const navLinks = document.getElementById('primary-navigation');
+
+  const closeMenu = () => {
+    header.classList.remove('menu-open');
+    document.body.classList.remove('menu-open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Abrir menu');
+  };
+
+  menuButton.addEventListener('click', () => {
+    const isOpen = header.classList.toggle('menu-open');
+    document.body.classList.toggle('menu-open', isOpen);
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+    menuButton.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('click', event => {
+    if (!header.contains(event.target)) closeMenu();
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 860) closeMenu();
+  });
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 12);
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal:not(.in)');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
