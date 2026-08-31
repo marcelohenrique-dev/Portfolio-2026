@@ -605,8 +605,10 @@
   @media (max-width:720px){
     .hero{
       min-height:78svh;
-      background-position:42% 24%;
-      background-size:145% auto;
+      background:
+        linear-gradient(90deg, rgba(10,10,10,.75) 0%, rgba(10,10,10,.58) 24%, rgba(10,10,10,.18) 58%),
+        url('imagens/HeroMobileVersion.png') center center / cover no-repeat;
+      background-position: center center;
     }
     nav.nav-links{
       position:fixed; top:var(--nav-h); left:0; right:0;
